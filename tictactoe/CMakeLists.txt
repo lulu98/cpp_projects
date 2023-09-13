@@ -5,9 +5,27 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-set(
-    SOURCE_FILES
-    main.cpp
-    Board.cpp)
+option(BUILD_EXEC "Build an executable." OFF)
+option(UNIT_TEST "Execute unit tests." OFF)
 
-add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+if(BUILD_EXEC)
+    set(
+        SOURCE_FILES
+            main.cpp
+            Board.cpp
+    )
+    add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+endif(BUILD_EXEC)
+
+if(UNIT_TEST)
+    # Locate GTest
+    find_package(GTest REQUIRED)
+    include_directories(${GTEST_INCLUDE_DIRS})
+
+    # Link runTests with what we want to test and the GTest and pthread library
+    add_executable(runTests tests.cpp Board.cpp)
+    target_link_libraries(runTests ${GTEST_LIBRARIES} pthread)
+endif(UNIT_TEST)
+
+unset(BUILD_EXEC CACHE)
+unset(UNIT_TEST CACHE)
