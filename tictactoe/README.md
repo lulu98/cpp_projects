@@ -11,17 +11,24 @@ the board is full and no player has won yet, it's a draw.
 ```bash
 mkdir build
 cd build
-cmake ..
+cmake -DBUILD_EXEC=ON ..
 cmake --build ..
+./tictactoe
 ```
 
-## Run Instructions
+## Test Instructions
 
 ```bash
-./tictactoe
+mkdir test
+cd test
+cmake -DUNIT_TEST=ON ..
+cmake --build ..
+./runTests
 ```
 
 ## TODO
 
 - maybe not have a separate board per player
 - have better text alignment
+- more thorough testing
+
