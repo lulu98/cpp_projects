@@ -6,6 +6,7 @@ mostly the C++17 standard.
 
 ## Projects
 
+- [Hangman](hangman/)
 - [TicTacToe](tictactoe/)
 
 ## Author
