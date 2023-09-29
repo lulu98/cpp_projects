@@ -1,0 +1,74 @@
+@startuml
+
+package Player <<Rectangle>>  {
+}
+
+class GameService
+{
+    -m_game: Game
+    +bool gameEnd()
+    +void makeGuess()
+    +void print()
+}
+
+class Game {
+    -m_state: State
+    +m_word: string
+    +m_wordMap: vector<int>
+    
+    +void changeState(state: State*)
+    +StateType getStateType()
+    +bool wordGuessed()
+    +bool gameEnd()
+    +void guess(input: string)
+    +void print()
+}
+
+abstract class State {
+    -m_game: Game
+    -m_fr: FileReader
+    
+    +StateType getStateType()
+    +void guess(input: string)
+    +void print()
+}
+
+class IntroState {
+}
+
+class PlayState {
+}
+
+class WinState {
+}
+
+class LoseState {
+}
+
+class FileReader {
+    -filePath: string
+    -fileName: string
+    -fileStream: ifstream
+
+    +int getLineCount()
+    +string getLine(int lineNumber=0)
+    +string getRandomLine()
+    +void printFile()
+    +void reopen(path: string_view, name: string_view)
+    +string getPath() const
+    +string getFileName() const
+}
+
+Game o-> State
+State <|-- IntroState
+State <|-- PlayState
+State <|-- WinState
+State <|-- LoseState
+
+GameService o-> Game
+
+State o-> FileReader
+
+Player --> GameService
+
+@enduml

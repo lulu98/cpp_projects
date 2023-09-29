@@ -16,6 +16,8 @@ if(BUILD_EXEC)
             main.cpp
             FileReader.cpp
             Game.cpp
+            State.cpp
+            GameService.cpp
     )
     add_definitions(-DASSETS_DIR="${ASSETS_DIR}")
     add_executable(${PROJECT_NAME} ${SOURCE_FILES})
@@ -27,7 +29,8 @@ if(UNIT_TEST)
     include_directories(${GTEST_INCLUDE_DIRS})
 
     # Link runTests with what we want to test and the GTest and pthread library
-    add_executable(runTests tests.cpp Board.cpp)
+    add_definitions(-DASSETS_DIR="${ASSETS_DIR}")
+    add_executable(runTests tests.cpp FileReader.cpp Game.cpp State.cpp GameService.cpp)
     target_link_libraries(runTests ${GTEST_LIBRARIES} pthread)
 endif(UNIT_TEST)
 

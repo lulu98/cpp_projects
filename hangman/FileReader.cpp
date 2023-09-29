@@ -1,3 +1,4 @@
+#include <cassert>
 #include "FileReader.h"
 
 FileReader::FileReader(std::string_view path, std::string_view name)
@@ -27,6 +28,7 @@ int FileReader::getLineCount()
 
 std::string FileReader::getLine(int lineNumber=0)
 {
+    assert(lineNumber >= 0 && lineNumber < getLineCount());
     resetFile();
     std::string line{};
     for(int count{0}; count <= lineNumber; ++count)
@@ -53,5 +55,28 @@ void FileReader::printFile()
     std::string line{};
     while(std::getline(fileStream,line))
         std::cout << line << '\n';
+}
+
+void FileReader::reopen(std::string_view path, std::string_view name)
+{
+    fileStream.close();
+    fileStream.clear();
+    filePath = path;
+    fileName = name;
+    fileStream.open(filePath + fileName);
+    if(!fileStream){
+        std::cerr << "This file does not exist!\n";
+        exit(1);
+    }
+}
+
+std::string FileReader::getPath() const
+{
+    return filePath + fileName;
+}
+
+std::string FileReader::getFileName() const
+{
+    return fileName;
 }
 

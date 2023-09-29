@@ -1,0 +1,15 @@
+@startuml
+
+[*] --> IntroState
+IntroState --> IntroState : guess(string), \n getStateType()
+IntroState --> PlayState : print()
+PlayState --> PlayState : print(), \n guess(string), \n getStateType()
+PlayState --> WinnerState: guess(string) \n && wordGuessed
+PlayState --> LoserState: guess(string) \n && !wordGuessed \n && gameOver
+WinnerState --> WinnerState : guess(string), \n print(), \n getStateType()
+WinnerState --> [*]
+LoserState --> LoserState: guess(string), \n print(), \n getStateType()
+LoserState --> [*]
+
+@enduml
+

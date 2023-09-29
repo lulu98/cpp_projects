@@ -33,5 +33,14 @@ public:
 
     // print file content
     void printFile();
+
+    // reopen a new file    
+    void reopen(std::string_view path, std::string_view name);
+
+    // get absolute path of file
+    std::string getPath() const;
+
+    // get file name
+    std::string getFileName() const;
 };
 
