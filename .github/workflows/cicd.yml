@@ -9,8 +9,10 @@ on:
     workflow_dispatch:
 
 jobs:
-    tictactoe:
+    test:
         runs-on: ubuntu-latest
+        strategy:
+            matrix: { dir: ['./tictactoe', './hangman'] }
 
         steps:
             - name: Checkout repository
@@ -30,7 +32,7 @@ jobs:
                   sudo cp lib/*.a /usr/lib
 
             - name: Build executable
-              working-directory: ./tictactoe
+              working-directory: ${{ matrix.dir }}
               run: |
                   mkdir build
                   cd build
@@ -38,7 +40,7 @@ jobs:
                   cmake --build .
 
             - name: Run unit tests
-              working-directory: ./tictactoe
+              working-directory: ${{ matrix.dir }}
               run: |
                   mkdir test
                   cd test
