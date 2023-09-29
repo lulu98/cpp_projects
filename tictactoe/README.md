@@ -1,5 +1,12 @@
 # Project: Tic Tac Toe
 
+## Concepts
+
+- class
+- struct
+- enum
+- ternary operator
+
 ## Description
 
 TicTacToe is a very simple game. You have two players that try to complete the
