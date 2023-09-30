@@ -1,5 +1,6 @@
 #include "State.h"
 #include "Game.h"
+#include <algorithm>
 
 // IntroState
 
@@ -45,15 +46,20 @@ void PlayState::guess(char c)
     if(outOfDrawings())
         return;
 
+    // note: might not work with parallel execution policy
     bool guessed{false};
-    for(int i{0}; i < m_game->m_word.length(); ++i)
-    {
-        if(c == m_game->m_word[i])
-        {
-            m_game->m_wordMap[i] = 1;
-            guessed = true;
+    int idx{0};
+    auto fillWordMapForGuess { // instead of auto: std::function, void (*fillWordMapForGuess)(char)
+        [=,&guessed](char currentChar) mutable {
+            if(c == currentChar){
+                m_game->m_wordMap[idx] = 1;
+                guessed = true;
+            }
+            ++idx;
         }
-    }
+    };
+    std::for_each(m_game->m_word.begin(), m_game->m_word.end(), fillWordMapForGuess);
+
     if(!guessed)
         m_currentDrawing = static_cast<Drawing>(static_cast<int>(m_currentDrawing) + 1);
     if(m_game->wordGuessed())
