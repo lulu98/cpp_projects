@@ -11,6 +11,7 @@
 - `State` design pattern
 - references
 - lambda functions
+- auto keyword
 - `std::array`
 - `std::vector`
 
@@ -94,7 +95,3 @@ cmake --build ..
 ./runTests
 ```
 
-## TODO
-
-- friend function
-- operator overloading
